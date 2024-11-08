@@ -1,3 +1,5 @@
+# Kinga Majcher 272354
+
 # function calculating machine epsilon (macheps)
 # T: type for which machine epsilon is calculated
 # returns: calculated machine epsilon for given type

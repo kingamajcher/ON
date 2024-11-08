@@ -1,3 +1,5 @@
+# Kinga Majcher 272354
+
 # function calculating smallest number for which x*(1/x) != 1, where 1 < x < 2
 # returns: smallest number for which such conditions are met, otherwise -1
 function find_x()
@@ -6,6 +8,7 @@ function find_x()
 
     while num < Float64(2.0)
         if num * (Float64(1.0)/num) != 1
+            println(num * (Float64(1.0)/num))
             return num
         end
         num += delta

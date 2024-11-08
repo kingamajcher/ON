@@ -1,9 +1,11 @@
+# Kinga Majcher 272354
+
 # function calculating maximum machine number (MAX)
 # T: type for which MAX is calculated
 # returns: calculated MAX for given type
 function calculate_machine_max(T)
     max = T(1.0)
-    temp = T(1.0)
+    temp = T(1.0) # temporary variable used for calculating biggest number before 1.0
 
     while max - temp < T(1.0)
         temp /= 2

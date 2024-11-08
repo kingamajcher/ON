@@ -1,3 +1,5 @@
+# Kinga Majcher 272354
+
 x = [2.718281828,-3.141592654, 1.414213562, 0.5772156649, 0.3010299957]
 y = [1486.2497, 878366.9879, -22.37492, 4773714.647, 0.000185049]
 
@@ -6,7 +8,7 @@ y = [1486.2497, 878366.9879, -22.37492, 4773714.647, 0.000185049]
 # returns: calculated sum
 function sum_in_order(T)
     sum = T(0.0)
-    for i in 1:5
+    for i in 1:length(x)
         sum += T(x[i]) * T(y[i])
     end
     return sum
@@ -17,7 +19,7 @@ end
 # returns: calculated sum
 function sum_in_reverse_order(T)
     sum = T(0.0)
-    for i = 5:-1:1
+    for i = length(x):-1:1
         sum += T(x[i]) * T(y[i])
     end
     return sum
@@ -29,11 +31,21 @@ end
 function sum_in_decreasing_order(T)
     positive_sum = T(0.0)
     negative_sum = T(0.0)
-    positive_sum += T(x[4]) * T(y[4])
-    positive_sum += T(x[1]) * T(y[1])
-    positive_sum += T(x[5]) * T(y[5])
-    negative_sum += T(x[2]) * T(y[2])
-    negative_sum += T(x[3]) * T(y[3])
+
+    products = [T(xi) * T(yi) for (xi, yi) in zip(x, y)]
+
+    positive_products = sort([p for p in products if p >= 0], rev = true)
+
+    negative_products = sort([p for p in products if p < 0])
+
+    for i in 1:length(positive_products)
+        positive_sum += positive_products[i] 
+    end
+
+    for i in 1:length(negative_products)
+        negative_sum += negative_products[i] 
+    end
+
     sum = positive_sum + negative_sum
     return sum
 end
@@ -44,11 +56,20 @@ end
 function sum_in_increasing_order(T)
     positive_sum = T(0.0)
     negative_sum = T(0.0)
-    positive_sum += T(x[5]) * T(y[5])
-    positive_sum += T(x[1]) * T(y[1])
-    positive_sum += T(x[4]) * T(y[4])
-    negative_sum += T(x[3]) * T(y[3])
-    negative_sum += T(x[2]) * T(y[2])
+
+    products = [T(xi) * T(yi) for (xi, yi) in zip(x, y)]
+
+    positive_products = sort([p for p in products if p >= 0])
+    negative_products = sort([p for p in products if p < 0], rev = true)
+
+    for i in 1:length(positive_products)
+        positive_sum += positive_products[i] 
+    end
+
+    for i in 1:length(negative_products)
+        negative_sum += negative_products[i] 
+    end
+
     sum = positive_sum + negative_sum
     return sum
 end

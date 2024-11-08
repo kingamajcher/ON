@@ -1,3 +1,5 @@
+# Kinga Majcher 272354
+
 # function which calculates value of sin(x) + cos(3x) for given x
 # x: variable of type Float64 for which value of expression above would be calculated
 # returns: caluclated value of expression for given x

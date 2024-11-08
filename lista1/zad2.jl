@@ -1,3 +1,5 @@
+# Kinga Majcher 272354
+
 # function calculating macheps using Kahan's method - caluclating value of expression 3 * ((4/3) - 1) - 1
 # T: type for which machine epsilon is calculated
 # returns: value of macheps calculated using Kahan's method

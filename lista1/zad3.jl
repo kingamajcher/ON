@@ -1,3 +1,5 @@
+# Kinga Majcher 272354
+
 # function which separates the sign, exponent and mantisa parts of bitstring of given number so they are easier to separates
 # number: a variable of type Float64 for which this operation would be done
 # returns: separated by spaces string of bytes 
@@ -63,4 +65,4 @@ function find_delta(left, right)
 
 end
 
-find_delta(Float64(1.0), Float64(2.0))
+find_delta(Float64(2.0), Float64(4.0))
