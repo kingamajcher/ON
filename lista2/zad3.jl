@@ -3,8 +3,6 @@
 using LinearAlgebra
 using Printf
 
-global conditionNums = [Float64(1), Float64(10), Float64(10^3), Float64(10^7), Float64(10^12), Float64(10^16)]
-
 function hilb(n::Int)
 # Function generates the Hilbert matrix  A of size n,
 #  A (i, j) = 1 / (i + j - 1)
@@ -42,6 +40,8 @@ function matcond(n::Int, c::Float64)
     return U*diagm(0 =>[LinRange(1.0,c,n);])*V'
 end
 
+# function, which solves Ax = b using Gauss's method and method with inverted matrix, calculates relative errors for both methods and prints everyting in table for Hilberts matrices of sizes from 1 to n
+# n: maximal size of matrix for which Ax = b is being solved
 function solveHilbertsMatrices(n)
     println("Hilbert's matrices")
     println("-----------------------------------------------------------------------------------------------------")
@@ -59,10 +59,15 @@ function solveHilbertsMatrices(n)
         errorInversion = norm(xInversion - x)/norm(x)
 
         @printf("| %-5s | %-25s | %-5s | %-25s | %-25s |\n", i, cond(A), rank(A), errorGauss, errorInversion)
+        # println(i, " & ", cond(A), " & ", rank(A), " & ", errorGauss, " & ", errorInversion, " \\\\")
+        # println("\\hline")
     end
     println("-----------------------------------------------------------------------------------------------------\n")
 end
 
+# function, which solves Ax = b using Gauss's method and method with inverted matrix, calculates relative errors for both methods and prints everyting in table for random matrices of sizes in n and condition number in c
+# n: array of sizes of matrices for which Ax = b is being solved
+# c: array of condition numbers of matrices for which Ax = b is being solved
 function solveRandomMatrices(n, c)
     println("Random matrices")
     println("-----------------------------------------------------------------------------------------------------")
@@ -80,13 +85,15 @@ function solveRandomMatrices(n, c)
             errorGauss = norm(xGauss - x)/norm(x)
             errorInversion = norm(xInversion - x)/norm(x)
 
-            @printf("| %-5s | %-25s | %-5s | %-25s | %-25s |\n", i, cond(A), rank(A), errorGauss, errorInversion)
+            @printf("| %-5s | %-25s | %-5s | %-25s | %-25s |\n", i, j, rank(A), errorGauss, errorInversion)
+            # println(i, " & ", j, " & ", rank(A), " & ", errorGauss, " & ", errorInversion, " \\\\")
+            # println("\\hline")
         end
     end
     println("-----------------------------------------------------------------------------------------------------\n")
 end
 
-solveHilbertsMatrices(20)
+solveHilbertsMatrices(13)
 
 global conditionNums = [Float64(1), Float64(10), Float64(10^3), Float64(10^7), Float64(10^12), Float64(10^16)]
 global sizes = [5, 10, 20]
