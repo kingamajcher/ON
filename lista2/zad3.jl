@@ -59,8 +59,6 @@ function solveHilbertsMatrices(n)
         errorInversion = norm(xInversion - x)/norm(x)
 
         @printf("| %-5s | %-25s | %-5s | %-25s | %-25s |\n", i, cond(A), rank(A), errorGauss, errorInversion)
-        # println(i, " & ", cond(A), " & ", rank(A), " & ", errorGauss, " & ", errorInversion, " \\\\")
-        # println("\\hline")
     end
     println("-----------------------------------------------------------------------------------------------------\n")
 end
@@ -86,8 +84,6 @@ function solveRandomMatrices(n, c)
             errorInversion = norm(xInversion - x)/norm(x)
 
             @printf("| %-5s | %-25s | %-5s | %-25s | %-25s |\n", i, j, rank(A), errorGauss, errorInversion)
-            # println(i, " & ", j, " & ", rank(A), " & ", errorGauss, " & ", errorInversion, " \\\\")
-            # println("\\hline")
         end
     end
     println("-----------------------------------------------------------------------------------------------------\n")
