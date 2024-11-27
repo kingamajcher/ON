@@ -1,7 +1,7 @@
 # Kinga Majcher 272354
 
 module Methods
-export bisectionMethod, newtonsMethod, secantMethod
+export mbisekcji, mstycznych, msiecznych
 
 # Function to approximate a root of f(x) = 0 using the bisection method
 # Input:
@@ -16,7 +16,7 @@ export bisectionMethod, newtonsMethod, secantMethod
 #      err: error code:
 #           0: no error
 #           1: the function does not change sign on the interval [a, b]
-function bisectionMethod(f, a::Float64, b::Float64, delta::Float64, epsilon::Float64)
+function mbisekcji(f, a::Float64, b::Float64, delta::Float64, epsilon::Float64)
     v_a::Float64 = f(a)
     v_b::Float64 = f(b)
     len::Float64 = b - a
@@ -44,7 +44,6 @@ function bisectionMethod(f, a::Float64, b::Float64, delta::Float64, epsilon::Flo
 end
 
 
-
 # Function to approximate a root of f(x) = 0 using Newton's method
 # Input:
 #      f: the function f(x)
@@ -61,7 +60,7 @@ end
 #           0: the method converged
 #           1: the method did not achieve the required precision
 #           2: the derivative is close to 0
-function newtonsMethod(f, pf, x0::Float64, delta::Float64, epsilon::Float64, maxit::Int)
+function mstycznych(f, pf, x0::Float64, delta::Float64, epsilon::Float64, maxit::Int)
     v::Float64 = f(x0)
     if abs(v) < epsilon
         return x0, v, 0, 0
@@ -81,6 +80,7 @@ function newtonsMethod(f, pf, x0::Float64, delta::Float64, epsilon::Float64, max
     return x0, v, maxit, 1
 end
 
+
 # Function to approximate a root of f(x) = 0 using the Secant method
 # Input:
 #      f: the function f(x)
@@ -95,7 +95,7 @@ end
 #      err: error code:
 #           0: the method converged
 #           1: the method did not achieve the required precision
-function secantMethod(f, x0::Float64, x1::Float64, delta::Float64, epsilon::Float64,maxit::Int)
+function msiecznych(f, x0::Float64, x1::Float64, delta::Float64, epsilon::Float64,maxit::Int)
     v_x0::Float64 = f(x0)
     v_x1::Float64 = f(x1)
     for k in 1:maxit
