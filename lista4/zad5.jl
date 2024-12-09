@@ -2,7 +2,6 @@
 
 include("interpolation.jl")
 using .Interpolation
-using Test
 using Plots
 
 
