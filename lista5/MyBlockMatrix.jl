@@ -2,25 +2,44 @@
 
 module MyBlockMatrix
 
-export BlockMatrix, loadMatrixFromFile, printMatrix,  getLastColumn, getLastRow
+export BlockMatrix, loadMatrixFromFile, printMatrix,  getFirstColumn, getLastColumn, getLastRow
 
 
-# BlockMatrix struct
+"""
+Struct BlockMatrix
+    n: - size of matrix
+    l: size of one block
+    rows: vector of vectors of values in matrix
+"""
 struct BlockMatrix
-    n::Int                                      # size of matrix
-    l::Int                                      # size of one block
+    n::Int
+    l::Int
     rows::Vector{Tuple{Int, Vector{Float64}}}   # rows: offset, values
 end
 
 
-# Constructor
+"""
+Constructor for BlockMatrix
+    Input: 
+        n: size of matrix
+        l: size of one block
+    Output:
+        empty BlockMatrix of given sizes
+"""
 function BlockMatrix(n::Int, l::Int)
     rows = [(0, Float64[]) for _ in 1:n]  # empty rows
     return BlockMatrix(n, l, rows)
 end
 
-
-# Getter (M[i, j])
+"""
+Getter (M[i, j])
+    Input:
+        M: BlockMatrix
+        i: value of row
+        j: value of getLastColumn
+    Output:
+        value of matrix in [i, j]
+"""
 function Base.getindex(M::BlockMatrix, i::Int, j::Int)::Float64
     row = M.rows[i]
     offset, values = row
@@ -33,7 +52,13 @@ function Base.getindex(M::BlockMatrix, i::Int, j::Int)::Float64
 end
 
 
-# Setter (M[i, j] = value)
+"""
+Setter (M[i, j]) = value
+    Input:
+        M: BlockMatrix
+        i: value of row
+        j: value of getLastColumn
+"""
 function Base.setindex!(M::BlockMatrix, value::Float64, i::Int, j::Int)
     row = M.rows[i]
     offset, values = row
@@ -73,16 +98,22 @@ function Base.setindex!(M::BlockMatrix, value::Float64, i::Int, j::Int)
 end
 
 
-# Function for loading matrix from file
+"""
+Function for loading matrix from file
+    Input:
+        filepath: path to file from which matrix will be loaded
+    Output:
+        BlockMatrix loaded from file
+"""
 function loadMatrixFromFile(filepath::String)::BlockMatrix
     open(filepath, "r") do file
-        # Read first line (sizes n and l)
+        # Reading first line (sizes n and l)
         first_line = readline(file)
         n, l = parse.(Int, split(first_line))
         
         M = BlockMatrix(n, l)
         
-        # Read the rest of lines and set values in matrix
+        # Reading the rest of lines and set values in matrix
         for line in eachline(file)
             i, j, value = parse.(Float64, split(line))
             M[Int(i), Int(j)] = value
@@ -93,13 +124,48 @@ function loadMatrixFromFile(filepath::String)::BlockMatrix
 end
 
 
-# Function for getting the index of column in which there is last non empty value in given row
+"""
+Function for getting the index of column in which there is first non empty value in given row
+    Input:
+        M: BlockMatrix
+        row: number of row for which the first column is calculated
+    Output:
+        number of column in which there is first non empty value in given row
+"""
+function getFirstColumn(M::BlockMatrix, row::Int)
+    thisRow = M.rows[row]
+    offset, values = thisRow
+
+    if isempty(values)
+        return 1
+    else
+        return offset
+    end
+end
+
+
+
+"""
+Function for getting the index of column in which there is last non empty value in given row
+    Input:
+        M: BlockMatrix
+        row: number of row for which the last column is calculated
+    Output:
+        number of column in which there is last non empty value in given row
+"""
 function getLastColumn(M::BlockMatrix, row::Int)
     return min(M.n, M.l + row)
 end
 
 
-# Function for getting the index of row in which there is last non empty value in given column
+"""
+Function for getting the index of row in which there is last non empty value in given column
+    Input:
+        M: BlockMatrix
+        column: number of column for which the last row is calculated
+    Output:
+        number of row in which there is last non empty value in given column
+"""
 function getLastRow(M::BlockMatrix, column::Int)
     if column % M.l == M.l-1
         return min(M.n, (div(column, M.l) + 2) * M.l)
@@ -109,7 +175,10 @@ function getLastRow(M::BlockMatrix, column::Int)
 end
 
 
-# Function for displaying matrix
+"""Function for displaying matrix
+    Input:
+        M: BlockMatrix
+"""
 function printMatrix(M::BlockMatrix)
     println("BlockMatrix:")
     for (i, row) in enumerate(M.rows)
